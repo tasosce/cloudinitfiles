@@ -90,7 +90,7 @@ for i in net:
                         nicspecfam['ip version'] = 'Hardware'
                 nicspecfam['address'] = str(net[i][j].address)
                 #management net ip
-                if '10.0.10' in nicspecfam['address']:
+                if '10.0.10.' in nicspecfam['address']:
                         ip = nicspecfam['address']
                 nicspecfam['netmask'] = str(net[i][j].netmask)
                 nicspecfam['broadcast'] = str(net[i][j].broadcast)
