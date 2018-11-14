@@ -37,7 +37,9 @@ else:
         os.system('mkdir /opt/stack/agent/vms_json_files')
         os.system('openstack server list -f json > /opt/stack/agent/instances.json')
         os.system('openstack flavor list -f json > /opt/stack/agent/flavors.json')
-        os.system('')
+        os.system('mkdir /opt/stack/agent/openmanofiles')
+        os.system('git clone https://github.com/tasosce/openmanofiles.git /opt/stack/agent/openmanofiles')
+        os.system('tar -zxvf /opt/stack/agent/openmano/test.tar.gz -C /opt/stack/agent/openmanofiles')
         print('\n- Directory \'agent\' has been created \n')
 
 if  os.stat('/opt/stack/agent/instances.json').st_size == 0:
@@ -74,6 +76,48 @@ else:
     os.environ['OSM_HOSTNAME'] = '10.180.205.228'
 
 
+#------------------------------------------------------------
+#-------------------- NS SELECTION --------------------------
+#------------------------------------------------------------
+
+
+print('|------------ NETWORK SERVICES ------------|\n')
+cnt = 0
+files = OrderedDict()
+for x in os.listdir('/opt/stack/agent/openmanofiles/test/'):
+    if '.tar.gz' in x:
+        pass
+    elif '_ns' in x:
+        cnt += 1
+        files[str(cnt)] = x
+        print('  [' + str(cnt) + ']' + x + ':')
+        if 'wordpress_10_ns' in x:
+            print('    [2 vms(apache,mysql) with ubuntu16.04 LTS connected to an internal network]\n')
+            print('    [(wordpress_net), pasiphae_net: apache, management_net : apache, mysql    ]\n')
+        elif 'ubuntu_vnf_ns' in x:
+            print('    [1 vm with ubuntu16.04 LTS connected to the management_net ]\n')
+        elif 'cirros035_2vnf_ns' in x:
+            print('    [2 vms with cirros 0.3.5 connected to the management_net ]\n')
+        elif 'multi_vm_topology_ns' in x:
+            print('    [2 vms(apache,mysql) with ubuntu16.04 LTS connected to an intetnal network]\n')
+            print('    [(wordpress_net), pasiphae_net: apache, management_net : apache, mysql    ]\n')
+            print('    [plus 1 vm with cirros 0.3.5 connected to the management_net              ]\n')
+        else:
+            print(x + '\n')
+            
+while True:
+    try:
+        answer = int(input('Select ns [1 - ' + str(cnt) + ']: '))
+    except ValueError:
+        print('Sorry, I didn\'t understand that.')
+        continue
+    if answer < 1 or answer > cnt:
+        print('Sorry, you need to select from 1 to ' + str(cnt))
+    else:
+        print(files[str(answer)])
+        # TO DO
+        # upload tar.gz files to openmano platform
+        break
 #------------------------------------------------------------
 #---------------------- TOPOLOGY ----------------------------
 #------------------------------------------------------------
