@@ -39,7 +39,7 @@ else:
         os.system('openstack flavor list -f json > /opt/stack/agent/flavors.json')
         os.system('mkdir /opt/stack/agent/openmanofiles')
         os.system('git clone https://github.com/tasosce/openmanofiles.git /opt/stack/agent/openmanofiles')
-        os.system('tar -zxvf /opt/stack/agent/openmano/test.tar.gz -C /opt/stack/agent/openmanofiles')
+        os.system('tar -zxvf /opt/stack/agent/openmanofiles/test.tar.gz -C /opt/stack/agent/openmanofiles')
         print('\n- Directory \'agent\' has been created \n')
 
 if  os.stat('/opt/stack/agent/instances.json').st_size == 0:
