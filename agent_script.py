@@ -102,6 +102,12 @@ for i in net:
 
 vmspec['NIC'] = niclst
 vmspec['management_net ip'] = ip
+addresses = ['8.8.8.8']
+response = os.system('ping -c 1 ' + addresses[0])
+if response == 0:
+        vmspec['status'] = 'connected'
+else:
+        vmspec['status'] = 'disconnected'
 
 speclist.append(vmspec)
 
@@ -117,6 +123,7 @@ data = {
         'IP address': vmspec['management_net ip'],
         'OS': vmspec['OS Name'],
         'Ram(gb)': ramspec['total'],
+        'Status': vmspec['status'],
         'vCPU': vmspec['VCPUs']
 }
 
