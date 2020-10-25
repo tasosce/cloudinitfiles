@@ -122,7 +122,7 @@ table = {
         'status': 'activated'
 }
 
-result1 = firebase.post('/InstanceTable',table)
+result1 = firebase.put('/InstanceTable','object',table)
 
 data = {
         'DNS name': vmspec['Hostname'],
