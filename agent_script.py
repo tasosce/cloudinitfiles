@@ -117,6 +117,13 @@ with open('/home/tasos/export/specs.json','w') as f1:
         f1.write('\n')
 
 firebase = firebase.FirebaseApplication("https://validator-243a5.firebaseio.com/",None)
+
+table = {
+        'status': 'activated'
+}
+
+result1 = firebase.post('/InstanceTable',table)
+
 data = {
         'DNS name': vmspec['Hostname'],
         'Disk(gb)': diskspec['total'],
@@ -127,5 +134,5 @@ data = {
         'vCPU': vmspec['VCPUs']
 }
 
-result = firebase.post('/VDU',data)
-print(result)
+result2 = firebase.post('/VDU',data)
+print(result2)
