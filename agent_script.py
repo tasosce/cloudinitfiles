@@ -124,7 +124,7 @@ table = {
 }
 
 result1 = firebase.put('/InstanceTable','object',table)
-timestamp = datetime.utcnow()
+timestamp = datetime.now()
 
 data = {
         'DNS name': vmspec['Hostname'],
