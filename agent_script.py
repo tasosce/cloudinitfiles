@@ -9,6 +9,7 @@ import json
 import platform
 from collections import OrderedDict
 from firebase import firebase
+from datetime import datetime
 
 try:
         import requests
@@ -123,6 +124,7 @@ table = {
 }
 
 result1 = firebase.put('/InstanceTable','object',table)
+timestamp = datetime.utcnow()
 
 data = {
         'DNS name': vmspec['Hostname'],
@@ -131,7 +133,8 @@ data = {
         'OS': vmspec['OS Name'],
         'Ram(gb)': ramspec['total'],
         'Status': vmspec['status'],
-        'vCPU': vmspec['VCPUs']
+        'vCPU': vmspec['VCPUs'],
+        'timestamp' : timestamp
 }
 
 result2 = firebase.post('/VDU',data)
