@@ -139,3 +139,82 @@ data = {
 
 result2 = firebase.post('/VDU',data)
 print(result2)
+
+from datetime import datetime
+
+firebase = firebase.FirebaseApplication("https://validator-243a5.firebaseio.com/",None)
+
+
+#RAM
+ram = psutil.virtual_memory()
+ram_used = ram.used / (1024 ** 3)
+ram_used = round(ram_used,2)
+
+ramTimestamp = datetime.now()
+
+ramData = {
+	'timestamp': ramTimestamp,
+	'ram': ram_used,
+}
+
+
+#CPU
+cpu_used = psutil.cpu_percent()
+cpu_used = round(cpu_used,1)
+
+cpuTimestamp = datetime.now()
+
+cpuData = {
+        'timestamp': cpuTimestamp,
+        'cpu': cpu_used,
+}
+
+result1 = firebase.post('/VDU/' + vmspec['Hostname'] + '/ram-timestamps',ramData)
+
+result2 = firebase.post('/VDU/' + vmspec['Hostname'] + '/cpu-timestamps',cpuData)
+
+result3 = firebase.get('/Timestamps',None)
+
+def send_timestamps():
+	global result1
+	global result2
+	global result3
+	result3 = firebase.get('/Timestamps',None)
+
+	#RAM
+	ram = psutil.virtual_memory()
+	ram_used = ram.used / (1024 ** 3)
+	ram_used = round(ram_used,2)
+
+	ramTimestamp = datetime.now()
+
+	print('sending timestamp... ',ramTimestamp,' ',ram_used,'GB')
+
+	ramData = {
+		'timestamp': ramTimestamp,
+		'ram': ram_used,
+	}
+
+	#CPU
+	cpu_used = psutil.cpu_percent()
+	cpu_used = round(cpu_used,1)
+
+	cpuTimestamp = datetime.now()
+
+	print('sending timestamp... ',cpuTimestamp,' ',cpu_used,'%')
+
+	cpuData = {
+		'timestamp': cpuTimestamp,
+		'cpu': cpu_used,
+	}
+
+	#result1 = firebase.post('/VDU/validator-ns-1-vdu-ubuntu16-1/ram-timestamps',data)
+	result1 = firebase.post('/VDU/' + vmspec['Hostname'] + '/ram-timestamps',ramData)
+	result2 = firebase.post('/VDU/' + vmspec['Hostname'] + '/cpu-timestamps',cpuData)
+
+schedule.every(60).seconds.do(send_timestamps)
+
+while result3['action'] != 'stop':
+	schedule.run_pending()
+
+print('stop sending')
