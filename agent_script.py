@@ -22,6 +22,12 @@ try:
 except ImportError:
         os.system('pip install psutil')
         import psutil
+	
+try:
+        import schedule
+except ImportError:
+        os.system('pip install schedule')
+        import schedule
 
 
 #------------------------------------------------------------
@@ -137,7 +143,7 @@ data = {
         'timestamp' : timestamp
 }
 
-result2 = firebase.post('/VDU/' + vmspec['Hostname'],data)
+result2 = firebase.put('/VDU/',vmspec['Hostname'],data)
 print(result2)
 
 
