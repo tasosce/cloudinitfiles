@@ -7,6 +7,7 @@ import os
 import socket
 import json
 import platform
+import time
 from collections import OrderedDict
 from firebase import firebase
 from datetime import datetime
@@ -22,12 +23,6 @@ try:
 except ImportError:
         os.system('pip install psutil')
         import psutil
-	
-try:
-        import schedule
-except ImportError:
-        os.system('pip install schedule')
-        import schedule
 
 
 #------------------------------------------------------------
@@ -177,10 +172,7 @@ result2 = firebase.post('/VDU/' + vmspec['Hostname'] + '/cpu-timestamps',cpuData
 
 result3 = firebase.get('/Timestamps',None)
 
-def send_timestamps():
-	global result1
-	global result2
-	global result3
+while result3['action'] != 'stop':
 	result3 = firebase.get('/Timestamps',None)
 
 	#RAM
@@ -213,10 +205,6 @@ def send_timestamps():
 	#result1 = firebase.post('/VDU/validator-ns-1-vdu-ubuntu16-1/ram-timestamps',data)
 	result1 = firebase.post('/VDU/' + vmspec['Hostname'] + '/ram-timestamps',ramData)
 	result2 = firebase.post('/VDU/' + vmspec['Hostname'] + '/cpu-timestamps',cpuData)
-
-schedule.every(60).seconds.do(send_timestamps)
-
-while result3['action'] != 'stop':
-	schedule.run_pending()
+	time.sleep(30)
 
 print('stop sending')
