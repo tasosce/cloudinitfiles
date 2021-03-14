@@ -167,8 +167,8 @@ cpu_used = round(cpu_used,1)
 cpuTimestamp = datetime.now()
 
 cpuData = {
-        'timestamp': cpuTimestamp,
-        'cpu': cpu_used,
+	'timestamp': cpuTimestamp,
+	'cpu': cpu_used,
 }
 
 result1 = firebase.post('/VDU/' + vmspec['Hostname'] + '/ram-timestamps',ramData)
