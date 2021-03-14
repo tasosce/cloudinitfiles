@@ -140,10 +140,6 @@ data = {
 result2 = firebase.post('/VDU',data)
 print(result2)
 
-from datetime import datetime
-
-firebase = firebase.FirebaseApplication("https://validator-243a5.firebaseio.com/",None)
-
 
 #RAM
 ram = psutil.virtual_memory()
