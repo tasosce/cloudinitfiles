@@ -137,7 +137,7 @@ data = {
         'timestamp' : timestamp
 }
 
-result2 = firebase.post('/VDU',data)
+result2 = firebase.post('/VDU/' + vmspec['Hostname'],data)
 print(result2)
 
 
