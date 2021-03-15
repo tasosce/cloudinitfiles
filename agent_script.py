@@ -172,6 +172,8 @@ result2 = firebase.post('/VDU Timestamps/' + vmspec['Hostname'] + '/cpu-timestam
 
 result3 = firebase.get('/Timestamps',None)
 
+result4 = firebase.put('/VDU Timestamps/' + vmspec['Hostname'] + '/','name',vmspec['Hostname'])
+
 while result3['action'] != 'stop':
 	result3 = firebase.get('/Timestamps',None)
 
