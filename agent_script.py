@@ -166,9 +166,9 @@ cpuData = {
 	'cpu': cpu_used,
 }
 
-result1 = firebase.post('/VDU/' + vmspec['Hostname'] + '/ram-timestamps',ramData)
+result1 = firebase.post('/VDU Timestamps/' + vmspec['Hostname'] + '/ram-timestamps',ramData)
 
-result2 = firebase.post('/VDU/' + vmspec['Hostname'] + '/cpu-timestamps',cpuData)
+result2 = firebase.post('/VDU Timestamps/' + vmspec['Hostname'] + '/cpu-timestamps',cpuData)
 
 result3 = firebase.get('/Timestamps',None)
 
@@ -203,8 +203,8 @@ while result3['action'] != 'stop':
 	}
 
 	#result1 = firebase.post('/VDU/validator-ns-1-vdu-ubuntu16-1/ram-timestamps',data)
-	result1 = firebase.post('/VDU/' + vmspec['Hostname'] + '/ram-timestamps',ramData)
-	result2 = firebase.post('/VDU/' + vmspec['Hostname'] + '/cpu-timestamps',cpuData)
+	result1 = firebase.post('/VDU Timestamps/' + vmspec['Hostname'] + '/ram-timestamps',ramData)
+	result2 = firebase.post('/VDU Timestamps/' + vmspec['Hostname'] + '/cpu-timestamps',cpuData)
 	time.sleep(30)
 
 print('stop sending')
